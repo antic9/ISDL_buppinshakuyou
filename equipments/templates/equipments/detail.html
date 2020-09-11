@@ -1,0 +1,61 @@
+{% extends "equipments/base.html" %}
+{% block title %}{{ equipment.name }} - ISDL{% endblock %}
+{% load static %}
+
+  {%block body %}
+    <div id="wrapper">
+      <div id="page-wrapper">
+        <div class="row">
+            <div class="panel panel-default">
+
+
+                          
+                <h3 class="page-header">{{ equipment.name }}</h3>
+
+                {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+                {% endif %}
+
+                <table id="equip-list-table" class="table table-striped table-bordered dataTable no-footer dtr-inline full-width">
+                  <thead>
+                    <tr>
+                      <th>持ち主</th>
+                      <th>状態</th>
+                      <th>持ち主</th>
+                      <th>備考</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{equipment.owner}}</td>
+                      {% if equipment.state == 0 %}
+                        <td>貸出可能</td>
+                      {% elif equipment.state == 1 %}
+                        <td>貸出申請中</td>
+                      {% elif equipment.state == 3 %}
+                        <td>返却申請中</td>
+                      {% else %}
+                        <td>貸出中</td>
+                      {% endif %}
+                      {% if equipment.borrower != 'None'%}
+                        <td>{{equipment.borrower}}</td>
+                      {% endif %}
+                      <td>{{equipment.remark}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <form action="{% url 'equipments:act' equipment.id %}" method="post">
+                  {% csrf_token %}
+                  {{ form }}
+                  <input type="submit" value="実行">
+                </form>
+
+              
+            </div>
+
+        </div>
+      </div>
+    </div>
+
+  {% endblock %}
