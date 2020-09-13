@@ -109,7 +109,6 @@ def approve(request, equipment_id):
   temp = Equipment.objects.get(pk=equipment_id)
   temp.state = 2
   temp.save()
-  #driver.refresh()
   return HttpResponseRedirect(reverse('equipments:approval'))
 
 ##返却処理
@@ -119,7 +118,6 @@ def returngoods(request, equipment_id):
   temp.borrower=""
   temp.remark=""
   temp.save()
-  #driver.refresh()
   return HttpResponseRedirect(reverse('equipments:approval'))
 
 ##申請処理
